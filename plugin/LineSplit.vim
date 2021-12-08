@@ -14,7 +14,7 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 if !exists(':LineSplit')
-  command -nargs=? LineSplit call LineSplit#split("<args>")
+  command -nargs=? LineSplit call LineSplit#split(<f-args>)
 endif
 
 let &cpo = s:save_cpo
