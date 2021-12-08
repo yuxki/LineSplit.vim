@@ -21,7 +21,6 @@ function! LineSplit#split#_split(separator) abort
     let s:end_pos = s:pos
     let s:matches = add(s:matches, s:pos)
   endwhile
-  echo s:matches
 
   for m in s:matches
     execute "normal ^"
