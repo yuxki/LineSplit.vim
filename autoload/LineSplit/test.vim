@@ -9,19 +9,21 @@ function! LineSplit#test#run()
   try
     call LineSplit#test#test_split#run()
   catch
-    execute 'cq!'
+    execute "cq!"
   endtry
 
   if len(v:errors) > 0
     for error in v:errors
-      echo error
+      "execute "silent !echo E"
+      let s:msg =  escape(error, "#")
+      execute "silent !echo " . s:msg
     endfor
-    execute 'cq!'
+    execute "cq!"
   endif
 
   " end test
-  execute 'silent !echo "OK"'
-  execute 'qall!'
+  execute "silent !echo \"OK\""
+  execute "qall!"
 endfunction
 
 let &cpo = s:save_cpo
