@@ -1,27 +1,61 @@
-*LineSplit.txt*	For Vim version 8.2	Last change: 2021/12/06 01:10:20
+*LineSplit.txt*	For Vim version 8.2	Last change: 2021/12/09 01:20:00
+Split a line into multiple lines by the separator
 
 Version: 1.0
 Author: yuxki
 License: MIT license
-Repository: 
+Repository: https://github.com/yuxki/LineSplit.vim
 
 ==============================================================================
 CONTENTS 						*LineSplit-contents*
 
 Introduction		|LineSplit-introduction|
 Usage			|LineSplit-usage|
-Install			|LineSplit-install|
 Interface		|LineSplit-interface|
   Functions		  |LineSplit-functions|
   Variables		  |LineSplit-variables|
 Examples		  |LineSplit-examples|
+Testing		  |LineSplit-testing|
 
 ==============================================================================
-INTRODUCTION							*LineSplit-introduction*
+INTRODUCTION						*LineSplit-introduction*
 
+*LineSplit* splits a single line into multiple lines by the demiliter(separator).
+>
+ hello
+
+ :LineSplit \w
+
+ h
+ e
+ l
+ l
+ o
+
+Actually you may just replace this plugin by a bellow command.
+>
+ :command -nargs=1 LineSplit s/\(<args>\)/\1\r/g
+<
 ==============================================================================
 USAGE							*LineSplit-usage*
 
+Point cursor to a line and Run this command to split it by default separator.
+>
+ :LineSplit
+<
+Note: Refer *g:linesplit_default_separator* about default separator.
+
+You can specifiy a separator by no quotation, single quotation, double
+quotation. There is no difference by each pattern.
+>
+ :LineSplit ,
+ :LineSplit ","
+ :LineSplit ','
+<
+You can also use regular expression.
+>
+ :LineSplit \s\+
+<
 ==============================================================================
 INTERFACE						*LineSplit-interface*
 
@@ -29,12 +63,41 @@ INTERFACE						*LineSplit-interface*
 ------------------------------------------------------------------------------
 FUNCTIONS						*LineSplit-functions*
 
+							*LineSplit#split()*
+LineSplit#split({separator})
+		Split a line at the cursor into multi lines by a separator.
+		{separator} is almost same as |{pat}| of |match()| args. If
+		{separator} is not passed, it use
+		*g:linesplit_default_separator* as the default.
+
+		Since it presses |<Enter>| after {separator}, not |substitute|,
+		it may keep indent.
 
 ------------------------------------------------------------------------------
 VARIABLES						*LineSplit-variables*
 
+						*g:linesplit_default_separator*
+g:linesplit_default_separator
+		The default separator.
+
+		Default: ","
+
 ==============================================================================
-EXAMPLES					*LineSplit-examples*
+EXAMPLES						*LineSplit-examples*
+
+Set default separator and map any key at your |vimrc|.
+>
+ g:linesplit_default_separator = ","
+ nnoremap <C-S> :LineSplit<CR>
+<
+==============================================================================
+TESTING						*LineSplit-testing*
+
+Run this command.
+>
+  vim +":call LineSplit#test#run()"
+<
+If all test is passed, it prints "OK".
 
 ==============================================================================
  vim:tw=78:ts=8:noet:ft=help:norl:
